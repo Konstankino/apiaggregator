@@ -1,0 +1,107 @@
+import React from "react";
+import { shallow } from "enzyme";
+import App from "../src/components/App";
+import Header from "../src/components/Header";
+import Table from "../src/components/Table";
+
+const setUp = component => {
+  const comonent = shallow(component);
+  return comonent;
+};
+
+describe("App component", () => {
+  let component;
+  beforeEach(() => {
+    component = setUp(<App />);
+  });
+  it("should renders", () => {
+    expect(component.exists()).toBe(true);
+  });
+
+  it("should render one Container", () => {
+    expect(component.find("Container").length).toBe(1);
+  });
+
+  it("should render Router", () => {
+    expect(component.find("BrowserRouter").length).toBe(1);
+  });
+
+  it("should render Header", () => {
+    expect(component.find("Header").length).toBe(1);
+  });
+
+  it("should render 3 routes", () => {
+    expect(component.find("Route").length).toBe(3);
+  });
+});
+
+describe("Header component", () => {
+  let component;
+  beforeEach(() => {
+    component = setUp(<Header />);
+  });
+
+  it("should render header image", () => {
+    expect(component.find("[data-test='header-img']").length).toBe(1);
+  });
+
+  it("should render Segment with props", () => {
+    expect(component.find("Segment").props().inverted).toBe(true);
+    expect(component.find("Segment").props().className).toBe("no_margin");
+  });
+
+  it("should render Menu", () => {
+    expect(component.find("Menu").length).toBe(1);
+  });
+
+  it("should render four Menu Items", () => {
+    expect(component.find("MenuItem").length).toBe(3);
+  });
+
+  it("should render three Link`s", () => {
+    expect(component.find("Link").length).toBe(3);
+  });
+
+  it("should render Google component", () => {
+    expect(component.find("GoogleOAuth").length).toBe(1);
+  });
+
+  it("should have state", () => {
+    expect(component.state("url")).toBe(null);
+  });
+
+  it("should chhange state", () => {
+    expect(component.instance().getProfileImage("url"));
+    expect(component.state("url")).toBe("url");
+  });
+});
+
+describe("Table component with NO props", () => {
+  let component;
+  beforeEach(() => {
+    component = setUp(<Table />);
+  });
+
+  it("should not renders", () => {
+    expect(component.find("Segment").length).toBe(0);
+  });
+});
+
+
+// describe("Table component with props", () => {
+//   let component;
+//   let props = {
+//     data: [{ checked: true, key: "", value: "" }],
+//     actions: {
+//       setStatus: () => {}
+//       setKey: () => {}
+//       setValue: () => {}
+//       removeSelected:
+//       addRow:
+//       removeRow:
+//     }
+//   };
+//   beforeEach(() => {
+//     component;
+//   });
+// });
